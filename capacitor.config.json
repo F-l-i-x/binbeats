@@ -1,0 +1,11 @@
+{
+  "appId": "app.binbeats",
+  "appName": "BinBeats",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "always"
+  }
+}

@@ -1,0 +1,19 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors / local tooling
+.vscode/
+.idea/
+.claude/
+
+# Node (only if native tooling is added later)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Native build outputs (Tauri / Capacitor)
+src-tauri/target/
+/ios/
+/android/
+dist/

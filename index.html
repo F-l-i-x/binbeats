@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>BinBeats — Binaural Beats Generator</title>
+  <meta name="description" content="Binaural-Beats-Generator mit EEG-Presets (Delta, Theta, Alpha, Beta, Gamma)." />
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon-192.png" />
+  <link rel="apple-touch-icon" href="icons/icon-192.png" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="BinBeats" />
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app">
+    <header class="header">
+      <h1 class="logo">Bin<span>Beats</span></h1>
+      <p class="tagline">Binaural Beats Generator</p>
+    </header>
+
+    <!-- Headphone notice -->
+    <div class="notice" id="headphone-notice">
+      <span class="notice__icon" aria-hidden="true">🎧</span>
+      <span>Binaural Beats funktionieren nur mit <strong>Kopfhörern</strong> (getrennte Kanäle).</span>
+    </div>
+
+    <!-- Beat readout -->
+    <section class="beat" id="beat-card" aria-live="polite">
+      <div class="beat__glow" aria-hidden="true"></div>
+      <div class="beat__value">
+        <span id="beat-hz">10.0</span><span class="beat__unit">Hz</span>
+      </div>
+      <div class="beat__band">
+        <span class="band-dot" id="band-dot"></span>
+        <span id="band-name">Alpha</span>
+      </div>
+      <p class="beat__band-desc" id="band-desc">Entspannung, ruhige Wachheit</p>
+      <canvas id="viz" class="viz" aria-hidden="true"></canvas>
+    </section>
+
+    <!-- Presets -->
+    <section class="presets" aria-label="EEG-Presets">
+      <div class="presets__grid" id="presets"></div>
+    </section>
+
+    <!-- Frequency controls -->
+    <section class="controls">
+      <div class="channel channel--left">
+        <div class="channel__head">
+          <span class="channel__label">Links</span>
+          <div class="channel__input">
+            <input type="number" id="freq-left-num" min="20" max="1000" step="0.01" value="200" aria-label="Frequenz links in Hz" />
+            <span class="channel__unit">Hz</span>
+          </div>
+        </div>
+        <input type="range" id="freq-left" class="slider" min="20" max="1000" step="0.01" value="200" aria-label="Frequenz linker Kanal" />
+      </div>
+
+      <div class="channel channel--right">
+        <div class="channel__head">
+          <span class="channel__label">Rechts</span>
+          <div class="channel__input">
+            <input type="number" id="freq-right-num" min="20" max="1000" step="0.01" value="210" aria-label="Frequenz rechts in Hz" />
+            <span class="channel__unit">Hz</span>
+          </div>
+        </div>
+        <input type="range" id="freq-right" class="slider" min="20" max="1000" step="0.01" value="210" aria-label="Frequenz rechter Kanal" />
+      </div>
+    </section>
+
+    <!-- Background noise -->
+    <section class="card noise">
+      <div class="noise__head">
+        <label class="switch">
+          <input type="checkbox" id="noise-toggle" />
+          <span class="switch__track"><span class="switch__thumb"></span></span>
+        </label>
+        <span class="noise__label">Pink Noise</span>
+      </div>
+      <input type="range" id="noise-level" class="slider slider--noise" min="0" max="100" step="1" value="30" aria-label="Rauschpegel" disabled />
+    </section>
+
+    <!-- Timer -->
+    <section class="card timer">
+      <div class="timer__head">
+        <span class="timer__label">Timer</span>
+        <span class="timer__countdown" id="timer-countdown"></span>
+      </div>
+      <div class="timer__chips" id="timer-chips"></div>
+    </section>
+
+    <!-- Save / Load settings -->
+    <section class="card settings">
+      <button type="button" id="save-settings" class="btn">Speichern</button>
+      <button type="button" id="load-settings" class="btn">Laden</button>
+      <input type="file" id="load-file" accept="application/json,.json" hidden />
+    </section>
+
+    <!-- Volume + Play -->
+    <section class="transport">
+      <div class="volume">
+        <span class="volume__icon" aria-hidden="true">🔊</span>
+        <input type="range" id="volume" class="slider slider--vol" min="0" max="100" step="1" value="40" aria-label="Lautstärke" />
+      </div>
+      <button id="play" class="play" aria-pressed="false">
+        <span class="play__icon" id="play-icon">▶</span>
+        <span class="play__label" id="play-label">Start</span>
+      </button>
+    </section>
+
+    <footer class="footer">
+      <p>Kein medizinisches Gerät. Nicht beim Autofahren oder Bedienen von Maschinen verwenden.</p>
+    </footer>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
